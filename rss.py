@@ -63,7 +63,7 @@ category = SubElement(channel, nsname("itunes", "category"))
 category.attrib["text"] = input("iTunes Category: ")
 
 DIR = sys.argv[1]
-for f in os.scandir(DIR):
+for f in sorted(os.scandir(DIR), key=lambda x: x.name):
     if not f.name.endswith(".mp3"):
         continue
     name = f.name[:-4]
