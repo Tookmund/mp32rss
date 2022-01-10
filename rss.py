@@ -4,6 +4,7 @@ import sys
 from datetime import datetime
 from email.utils import format_datetime
 from email.utils import formatdate
+from urllib.parse import quote_plus
 
 from lxml.etree import Element
 from lxml.etree import SubElement
@@ -70,7 +71,7 @@ for f in os.scandir(DIR):
     itemtitle = staticnselem(item, "itunes", "title", name)
     description = staticelem(item, "description", "")
     fmp3 = MP3(DIR+"/"+f.name)
-    url=RSSPATH+"/"+f.name
+    url=RSSPATH+"/"+quote_plus(f.name)
     stat = f.stat()
     size = stat.st_size
     enclosure = SubElement(item, "enclosure",
