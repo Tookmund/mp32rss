@@ -85,4 +85,4 @@ for f in sorted(os.scandir(DIR), key=lambda x: x.name):
     itemexplicit = staticnselem(item, "itunes", "explicit", explicit.text)
 
 et = ElementTree(rss)
-et.write("rss.xml", pretty_print=True)
+et.write(DIR+"/rss.xml", pretty_print=True)
