@@ -83,7 +83,7 @@ for f in sorted(os.scandir(DIR), key=lambda x: x.name):
             url=url)
     guid = staticelem(item, "guid", url)
     pubDate = staticelem(item, "pubDate", formatdate(stat.st_ctime))
-    mp3duration = fmp3.info.length
+    mp3duration = int(fmp3.info.length)
     duration = staticnselem(item, "itunes", "duration", str(mp3duration))
     itemexplicit = staticnselem(item, "itunes", "explicit", explicit.text)
 
