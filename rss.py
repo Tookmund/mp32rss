@@ -63,6 +63,7 @@ category = SubElement(channel, nsname("itunes", "category"))
 category.attrib["text"] = input("iTunes Category: ")
 
 DIR = sys.argv[1]
+episodenum = 1
 for f in sorted(os.scandir(DIR), key=lambda x: x.name):
     if not f.name.endswith(".mp3"):
         continue
@@ -70,6 +71,8 @@ for f in sorted(os.scandir(DIR), key=lambda x: x.name):
     item = SubElement(channel, "item")
     itemtitle = staticnselem(item, "itunes", "title", name)
     description = staticelem(item, "description", "")
+    itemnum = staticnselem(item, "itunes", "episode", str(episodenum))
+    episodenum += 1
     fmp3 = MP3(DIR+"/"+f.name)
     url=RSSPATH+"/"+quote(f.name)
     stat = f.stat()
