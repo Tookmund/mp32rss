@@ -11,7 +11,7 @@ from lxml.etree import SubElement
 from lxml.etree import ElementTree
 from lxml.builder import ElementMaker
 
-from mutagen.mp3 import MP3
+from mutagen.mp3 import EasyMP3 as MP3
 
 NS = {
     "itunes": "http://www.itunes.com/dtds/podcast-1.0.dtd",
@@ -69,11 +69,12 @@ for f in sorted(os.scandir(DIR), key=lambda x: x.name):
         continue
     name = f.name[:-4]
     item = SubElement(channel, "item")
-    itemtitle = staticnselem(item, "itunes", "title", name)
+    fmp3 = MP3(DIR+"/"+f.name)
+    ftitle = fmp3["title"][0] if "title" in fmp3 else name
+    itemtitle = staticnselem(item, "itunes", "title", ftitle)
     itemnum = staticnselem(item, "itunes", "episode", str(episodenum))
     episodenum += 1
     description = staticelem(item, "description", name)
-    fmp3 = MP3(DIR+"/"+f.name)
     url=RSSPATH+"/"+quote(f.name)
     stat = f.stat()
     size = stat.st_size
