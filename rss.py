@@ -49,8 +49,6 @@ itunesauthor = promptnselem(channel, "itunes", "author",
         "Program Author")
 itunessubtitle = promptnselem(channel, "itunes", "subtitle",
         "Program Subtitle")
-itunessummary = promptnselem(channel, "itunes", "summary",
-        "Program Summary")
 owner = SubElement(channel, nsname("itunes", "owner"))
 ownername = promptnselem(owner, "itunes", "name", "Owner Name")
 owneremail = promptnselem(owner, "itunes", "email", "Owner Email")
