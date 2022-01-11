@@ -62,6 +62,7 @@ category.attrib["text"] = input("iTunes Category: ")
 
 DIR = sys.argv[1]
 episodenum = 1
+prevdate = None
 for f in sorted(os.scandir(DIR), key=lambda x: x.name):
     if not f.name.endswith(".mp3"):
         continue
@@ -76,12 +77,16 @@ for f in sorted(os.scandir(DIR), key=lambda x: x.name):
     url=RSSPATH+"/"+quote(f.name)
     stat = f.stat()
     size = stat.st_size
+    itemdate = stat.st_ctime
+    if prevdate is not None and prevdate >= itemdate:
+        itemdate = prevdate+5
+    prevdate = itemdate
     enclosure = SubElement(item, "enclosure",
             length=str(size),
             type="audio/mpeg",
             url=url)
     guid = staticelem(item, "guid", url)
-    pubDate = staticelem(item, "pubDate", formatdate(stat.st_ctime))
+    pubDate = staticelem(item, "pubDate", formatdate(itemdate))
     mp3duration = int(fmp3.info.length)
     duration = staticnselem(item, "itunes", "duration", str(mp3duration))
     itemexplicit = staticnselem(item, "itunes", "explicit", explicit.text)
