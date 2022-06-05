@@ -35,32 +35,32 @@ def nsname(ns, name):
 def promptnselem(parent, ns, name, prompt):
     return promptelem(parent, nsname(ns, name), prompt)
 
-RSSPATH = input("rss.xml HTTP directory: ")
-rss = Element("rss", nsmap=NS, version="2.0")
-channel = SubElement(rss, "channel")
-title = promptelem(channel, "title", "Program Title")
-description = promptelem(channel, "description",
-        "Program Description")
-link = promptelem(channel, "link", "Link to Program")
-language = staticelem(channel, "language", "en-us")
-docs = staticelem(channel, "docs",
-        "https://help.apple.com/itc/podcasts_connect/#/itcbaf351599")
-itunesauthor = promptnselem(channel, "itunes", "author",
-        "Program Author")
-itunessubtitle = promptnselem(channel, "itunes", "subtitle",
-        "Program Subtitle")
-owner = SubElement(channel, nsname("itunes", "owner"))
-ownername = promptnselem(owner, "itunes", "name", "Owner Name")
-owneremail = promptnselem(owner, "itunes", "email", "Owner Email")
-
-explicit = promptnselem(channel, "itunes", "explicit",
-        "Explicit (Will apply to all episodes) (Yes/No)")
-image = SubElement(channel, nsname("itunes", "image"))
-image.attrib["href"] = RSSPATH+"/"+input("Image relative path: ")
-category = SubElement(channel, nsname("itunes", "category"))
-category.attrib["text"] = input("iTunes Category: ")
-
 for DIR in sys.argv:
+    RSSPATH = input(DIR+" rss.xml HTTP directory: ")
+    rss = Element("rss", nsmap=NS, version="2.0")
+    channel = SubElement(rss, "channel")
+    title = promptelem(channel, "title", DIR+" Program Title")
+    description = promptelem(channel, "description",
+            DIR+" Program Description")
+    link = promptelem(channel, "link", DIR+" Link to Program")
+    language = staticelem(channel, "language", "en-us")
+    docs = staticelem(channel, "docs",
+            "https://help.apple.com/itc/podcasts_connect/#/itcbaf351599")
+    itunesauthor = promptnselem(channel, "itunes", "author",
+            DIR+" Program Author")
+    itunessubtitle = promptnselem(channel, "itunes", "subtitle",
+            DIR+" Program Subtitle")
+    owner = SubElement(channel, nsname("itunes", "owner"))
+    ownername = promptnselem(owner, "itunes", "name", DIR+" Owner Name")
+    owneremail = promptnselem(owner, "itunes", "email", DIR+" Owner Email")
+
+    explicit = promptnselem(channel, "itunes", "explicit",
+            DIR+" Explicit (Will apply to all episodes) (Yes/No)")
+    image = SubElement(channel, nsname("itunes", "image"))
+    image.attrib["href"] = RSSPATH+"/"+input(DIR+" Image relative path: ")
+    category = SubElement(channel, nsname("itunes", "category"))
+    category.attrib["text"] = input(DIR+" iTunes Category: ")
+
     episodenum = 1
     prevdate = None
     for f in sorted(os.scandir(DIR), key=lambda x: x.name):
