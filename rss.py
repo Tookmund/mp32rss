@@ -35,7 +35,7 @@ def nsname(ns, name):
 def promptnselem(parent, ns, name, prompt):
     return promptelem(parent, nsname(ns, name), prompt)
 
-for DIR in sys.argv:
+for DIR in sys.argv[1:]:
     RSSPATH = input(DIR+" rss.xml HTTP directory: ")
     rss = Element("rss", nsmap=NS, version="2.0")
     channel = SubElement(rss, "channel")
